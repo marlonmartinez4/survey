@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -19,16 +20,15 @@ public class QuestionSurveyImpl implements QuestionSurveyRepository {
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
-    public Flux<QuestionSurvey> findAll() {
-        return Flux.fromIterable(questionSurveyDataRepository.findAll())
+    public Flux<QuestionSurvey> findAllByQuestionModuleId(int id) {
+        return Flux.fromIterable(questionSurveyDataRepository.findAllByQuestionModuleId(id))
                 .map(value -> modelMapper.map(value, QuestionSurvey.class));
     }
 
     @Override
-    public Flux<QuestionSurvey> findAllByQuestionModuleId(int id) {
-        return Flux.fromIterable(questionSurveyDataRepository.findAllByQuestionModuleId(id))
+    public Mono<QuestionSurvey> findById(int id) {
+        return Mono.justOrEmpty(questionSurveyDataRepository.findById(id))
                 .map(value -> modelMapper.map(value, QuestionSurvey.class));
     }
 }

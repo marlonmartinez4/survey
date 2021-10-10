@@ -5,22 +5,20 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class AnswerCustomer implements Serializable {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class AnswerCustomerValue implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1007352899644889893L;
+    private static final long serialVersionUID = 4769663628771565476L;
 
-    private int id;
-    private String questionAndAnswerIds;
-    private int customerId;
+    @EqualsAndHashCode.Include
+    private int idQuestion;
+    private int idAnswer;
 }

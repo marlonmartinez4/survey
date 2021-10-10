@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
@@ -22,6 +23,12 @@ public class AnswerSurveyImpl implements AnswerSurveyRepository {
     @Override
     public Flux<AnswerSurvey> findAll() {
         return Flux.fromIterable(answerSurveyDataRepository.findAll())
+                .map(value -> modelMapper.map(value, AnswerSurvey.class));
+    }
+
+    @Override
+    public Mono<AnswerSurvey> findById(int id) {
+        return Mono.justOrEmpty(answerSurveyDataRepository.findById(id))
                 .map(value -> modelMapper.map(value, AnswerSurvey.class));
     }
 }
