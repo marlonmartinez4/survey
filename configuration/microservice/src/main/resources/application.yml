@@ -1,0 +1,81 @@
+server:
+  port: 8080
+  http2:
+    enabled: true
+  servlet:
+    context-path: "/prueba"
+app:
+  domain:
+    default-max-age: 3600
+    paths:
+      base: "/prueba/"
+      query-handler: "/api"
+    allowed-origins:
+      - "*"
+    allowed-headers:
+      - "X-COMP-ERROR-X"
+  swagger:
+    name: "Ejemplo"
+    desc: "microservicio"
+    contacto:
+      name: "name"
+    license: "Apache 2.0"
+    license-url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  cqrs:
+    group: "com.prueba.java"
+    query-handler:
+      base-package: "handler"
+    command:
+      base-package: "command"
+      execution-code-success: "PLAT0000"
+      execution-code-failed: "PLAT9999"
+  sql:
+    document-base-package: "com.prueba.java.sql.repository"
+
+spring:
+  datasource:
+    url: ${envUriSql}
+    username: ${envUserNameSql}
+    password: ${envPasswordSql}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 25
+      connection-timeout: 15000
+      idle-timeout: 300000
+      max-lifetime: 900000
+  flyway:
+    enabled: false
+    baseline-version: 1.0
+    baseline-on-migrate: true
+    check-location: false
+    sqlMigrationSuffixes: .sql
+    clean-disabled: false
+    clean-on-validation-error: false
+    schemas: public
+    locations: classpath:db/migration, classpath:db/update
+    outOfOrder: false
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    properties:
+      hibernate:
+        ddl-auto: update
+        jdbc:
+          batch_size: 20
+          lob:
+            non_contextual_creation: true
+          cache:
+            use_query_cache: true
+            use_second_level_cache: true
+            use_structured_entries: true
+            use_minimal_puts: true
+        temp:
+          use_jdbc_metadata_defaults: false
+  jackson:
+    default-property-inclusion: non_null
+  profiles:
+    active: local
+
+client:
+  retry: 1

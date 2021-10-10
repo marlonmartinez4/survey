@@ -1,0 +1,18 @@
+apply plugin: 'org.springframework.boot'
+
+springBoot {
+    mainClassName = 'com.prueba.java.ArquitecturaJavaApplication'
+}
+
+dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation project(':domain-model')
+    implementation project(':domain-usecase')
+    implementation project(':entrypoint-reactive')
+    implementation project(':helper-command')
+    implementation project(':sql-msql')
+}

@@ -1,0 +1,88 @@
+apply plugin: 'idea'
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'jacoco'
+
+    repositories {
+        jcenter()
+    }
+
+}
+
+subprojects { subproject ->
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'maven-publish'
+
+    group gradle.ext.group
+    version rootProject.version
+    sourceCompatibility = JavaVersion.VERSION_15
+    subproject.archivesBaseName = subproject.name
+
+    configurations {
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://repo.spring.io/milestone" }
+        maven {
+            url 'https://naturalprogrammer.github.io/mvn-repository'
+        }
+        maven {
+            url "https://maven.springframework.org/release"
+        }
+        maven {
+            url "https://maven.restlet.com"
+        }
+    }
+
+    sonarqube {
+        properties {
+            property "sonar.groovy.jacoco.reportPath", "${subproject.buildDir}/jacoco/test.exec"
+            property "sonar.jacoco.reportPath", "${subproject.buildDir}/jacoco/test.exec"
+            property "sonar.binaries", "${subproject.buildDir}/classes"
+            property "sonar.groovy.binaries", "${subproject.buildDir.name}${File.separator}classes"
+        }
+    }
+
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:$lombokVersion"
+
+        implementation "org.codehaus.groovy:groovy:$groovyVersion"
+        implementation 'org.modelmapper:modelmapper:2.3.6'
+        implementation 'io.projectreactor:reactor-core'
+        implementation 'io.projectreactor.addons:reactor-extra'
+        implementation 'org.slf4j:slf4j-api:1.7.28'
+        implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+        implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+        implementation "org.modelmapper:modelmapper:$modelMapperVersion"
+
+        annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+        testImplementation 'org.slf4j:slf4j-simple:1.7.30'
+        testImplementation 'org.slf4j:slf4j-api:1.7.30'
+        testImplementation 'org.apache.commons:commons-lang3:3.9'
+        testImplementation group: 'junit', name: 'junit', version: '4.12'
+
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+        }
+    }
+
+
+}

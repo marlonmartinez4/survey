@@ -1,0 +1,9 @@
+dependencies {
+    implementation project(':domain-model')
+    implementation project(':domain-usecase')
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.apache.commons:commons-lang3:3.9'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+
+}
