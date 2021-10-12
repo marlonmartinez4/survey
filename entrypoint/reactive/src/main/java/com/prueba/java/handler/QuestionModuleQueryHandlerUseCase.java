@@ -20,12 +20,12 @@ public class QuestionModuleQueryHandlerUseCase {
     private final QuestionModuleHandlerUseCase questionModuleHandlerUseCase;
 
     @GetMapping("/module-question-list")
-    private Flux<QuestionSurveyDto> findAll(){
+    public Flux<QuestionSurveyDto> findAll(){
         return questionModuleHandlerUseCase.findAll();
     }
 
     @GetMapping("/by-id-module-question/{idModuleQuestion}")
-    private Mono<QuestionSurveyDto> listModuleQuestionWithQuestion(@PathVariable("idModuleQuestion") String idModuleQuestion){
+    public Mono<QuestionSurveyDto> listModuleQuestionWithQuestion(@PathVariable("idModuleQuestion") String idModuleQuestion){
         return questionModuleHandlerUseCase.listModuleQuestionWithQuestion(Integer.parseInt(idModuleQuestion));
     }
 

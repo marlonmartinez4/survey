@@ -3,7 +3,6 @@ package com.prueba.java.usecase.handler;
 import com.prueba.java.dto.QuestionSurveyDto;
 import com.prueba.java.enums.SurveyEnum;
 import com.prueba.java.exception.SurveyException;
-import com.prueba.java.model.QuestionModule;
 import com.prueba.java.repository.QuestionModuleRepository;
 import com.prueba.java.repository.QuestionSurveyRepository;
 import lombok.AllArgsConstructor;

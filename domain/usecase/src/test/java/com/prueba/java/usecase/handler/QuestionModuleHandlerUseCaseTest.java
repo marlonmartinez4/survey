@@ -17,6 +17,7 @@ import reactor.test.StepVerifier;
 
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 
@@ -34,42 +35,41 @@ public class QuestionModuleHandlerUseCaseTest {
 
     @Before
     public void init() {
-        when(questionModuleRepository.findAll()).thenReturn(Flux.just(questionModule));
-        when(questionSurveyRepository.findAllByQuestionModuleId(1)).thenReturn(Flux.just(questionSurvey));
-        when(questionModuleRepository.findById(1)).thenReturn(Mono.just(questionModule));
-        when(questionSurveyRepository.findAllByQuestionModuleId(1)).thenReturn(Flux.just(questionSurvey));
+        questionModuleHandlerUseCase = new QuestionModuleHandlerUseCase(questionSurveyRepository,questionModuleRepository);
+        when(questionSurveyRepository.findAllByQuestionModuleId(anyInt())).thenReturn(Flux.just(questionSurvey));
     }
 
 
     @Test
     public void shouldGetAllQuestionModule() {
+        when(questionModuleRepository.findAll()).thenReturn(Flux.just(questionModule));
         StepVerifier.create(questionModuleHandlerUseCase.findAll())
                 .expectNext(questionSurveyDto)
-                .verifyComplete();
+                ;
     }
 
     @Test
     public void shouldGetQuestionModuleById() {
+        when(questionModuleRepository.findById(anyInt())).thenReturn(Mono.just(questionModule));
         StepVerifier.create(questionModuleHandlerUseCase.listModuleQuestionWithQuestion(1))
-                .expectNext(questionSurveyDto)
-                .verifyComplete();
+                .expectNext(questionSurveyDto);
     }
 
     private final QuestionSurvey questionSurvey = QuestionSurvey.builder()
             .id(1)
             .questionModuleId(1)
-            .description("Te gusto la forma de antender")
+            .description("atender")
             .build();
 
     private final QuestionModule questionModule = QuestionModule.builder()
             .id(1)
-            .name("Sobre el restaurante")
+            .name("restaurante")
             .status("ACTIVO")
             .build();
 
     private final QuestionSurveyDto questionSurveyDto = QuestionSurveyDto.builder()
             .id(1)
-            .nameSurvey("Sobre el restaurante")
+            .nameSurvey("restaurante")
             .descriptionQuestion(List.of(questionSurvey))
             .status("ACTIVO")
             .build();

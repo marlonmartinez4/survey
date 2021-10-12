@@ -10,6 +10,7 @@ import com.prueba.java.repository.AnswerCustomerRepository;
 import com.prueba.java.repository.AnswerSurveyRepository;
 import com.prueba.java.repository.CustomerRepository;
 import com.prueba.java.repository.QuestionSurveyRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
@@ -21,6 +22,7 @@ import static java.util.Objects.nonNull;
 
 @Slf4j
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Component
 public class AnswerCustomerCommandUseCase {
 

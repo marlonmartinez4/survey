@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -20,13 +19,6 @@ public class CustomerImpl implements CustomerRepository {
 
     @Autowired
     private CustomerDataRepository customerDataRepository;
-
-
-    @Override
-    public Flux<Customer> findAll() {
-        return Flux.fromIterable(customerDataRepository.findAll())
-                .map(value -> modelMapper.map(value, Customer.class));
-    }
 
     @Override
     public Mono<Customer> save(Customer customer) {

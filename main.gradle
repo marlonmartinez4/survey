@@ -70,15 +70,18 @@ subprojects { subproject ->
         implementation 'com.google.code.gson:gson:2.8.8'
 
         annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+        testAnnotationProcessor 'org.projectlombok:lombok'
+        testCompileOnly 'org.projectlombok:lombok'
 
-        testImplementation 'org.slf4j:slf4j-simple:1.7.30'
-        testImplementation 'org.slf4j:slf4j-api:1.7.30'
+
         testImplementation 'org.apache.commons:commons-lang3:3.9'
         testImplementation group: 'junit', name: 'junit', version: '4.12'
-        testImplementation 'org.spockframework:spock-core:2.0-groovy-3.0'
         testImplementation 'org.mockito:mockito-core:4.0.0'
         implementation 'net.bytebuddy:byte-buddy:1.11.19'
         testImplementation 'org.objenesis:objenesis:3.2'
+        testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.4')
+        implementation('org.springframework.boot:spring-boot-starter-webflux:2.5.4')
+        testImplementation 'io.projectreactor:reactor-test:3.4.10'
 
 
     }
